@@ -38,70 +38,70 @@ function createCashDrawerButton() {
 function injectButton() {
     try {
         console.log('Tentative d\'injection du bouton');
-        // On cherche le conteneur des boutons de contrôle
-        const controlButtons = document.querySelector('.control-buttons');
-        if (controlButtons && !document.querySelector('.cash-drawer-button')) {
-            console.log('Conteneur trouvé, injection du bouton');
-            const button = createCashDrawerButton();
-            if (button) {
-                controlButtons.appendChild(button);
-                console.log('Bouton du tiroir caisse ajouté avec succès');
+        // On cherche tous les conteneurs possibles
+        const possibleContainers = [
+            '.control-buttons',
+            '.pos .control-buttons',
+            '.pos-content .control-buttons',
+            '.pos .buttons .control-buttons'
+        ];
+
+        console.log('Recherche des conteneurs possibles...');
+        for (const selector of possibleContainers) {
+            const container = document.querySelector(selector);
+            if (container) {
+                console.log(`Conteneur trouvé avec le sélecteur: ${selector}`);
+                if (!document.querySelector('.cash-drawer-button')) {
+                    const button = createCashDrawerButton();
+                    if (button) {
+                        container.appendChild(button);
+                        console.log('Bouton du tiroir caisse ajouté avec succès');
+                        return true;
+                    }
+                } else {
+                    console.log('Le bouton existe déjà');
+                    return false;
+                }
             }
         }
+        console.log('Aucun conteneur trouvé pour le moment');
+        return false;
     } catch (error) {
         console.error('Erreur lors de l\'injection du bouton:', error);
+        return false;
     }
 }
 
-// Variable pour suivre si l'observateur est déjà actif
-let observerActive = false;
-
-// Fonction pour observer les changements dans le DOM
-function observeDOM() {
-    if (observerActive) {
-        console.log('Observateur déjà actif');
-        return;
-    }
-
-    try {
-        console.log('Démarrage de l\'observateur DOM');
-        const observer = new MutationObserver((mutations) => {
-            try {
-                for (const mutation of mutations) {
-                    if (mutation.addedNodes.length) {
-                        const controlButtons = document.querySelector('.control-buttons');
-                        if (controlButtons && !document.querySelector('.cash-drawer-button')) {
-                            console.log('Nouveau conteneur détecté');
-                            injectButton();
-                            break;
-                        }
-                    }
-                }
-            } catch (error) {
-                console.error('Erreur dans l\'observateur:', error);
-            }
-        });
-
-        observer.observe(document.body, {
-            childList: true,
-            subtree: true
-        });
-
-        observerActive = true;
-        console.log('Observateur DOM démarré avec succès');
-    } catch (error) {
-        console.error('Erreur lors du démarrage de l\'observateur:', error);
+// Fonction pour vérifier périodiquement et injecter le bouton
+function checkAndInject() {
+    console.log('Vérification pour injection...');
+    if (!injectButton()) {
+        console.log('Nouvelle tentative dans 1 seconde...');
+        setTimeout(checkAndInject, 1000);
     }
 }
 
-// Attendre que le DOM soit complètement chargé
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('DOM chargé, initialisation de l\'extension');
-    setTimeout(() => {
-        observeDOM();
-        injectButton();
-    }, 1000);
+// Démarrer la vérification périodique
+console.log('Démarrage de la vérification périodique');
+checkAndInject();
+
+// Observer les changements dans le DOM pour les nouvelles opportunités d'injection
+const observer = new MutationObserver((mutations) => {
+    console.log('Changement détecté dans le DOM');
+    mutations.forEach((mutation) => {
+        if (mutation.addedNodes.length) {
+            console.log('Nouveaux nœuds ajoutés, tentative d\'injection');
+            injectButton();
+        }
+    });
 });
+
+// Démarrer l'observation du DOM
+observer.observe(document.body, {
+    childList: true,
+    subtree: true
+});
+console.log('Observateur DOM démarré');
 
 // Écouter également le clic sur le bouton de paiement en espèces
 document.addEventListener('click', function(e) {
