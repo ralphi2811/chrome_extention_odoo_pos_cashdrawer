@@ -14,7 +14,7 @@ Extension Chrome pour ouvrir automatiquement le tiroir caisse sur l'interface PO
 
 1. Clonez ce dépôt :
 ```bash
-git clone https://github.com/votre-username/odoo_pos_cashdrawer_extension
+git clone https://github.com/ralphi2811/odoo_pos_cashdrawer_extension
 ```
 
 2. Installez l'extension dans Chrome :
