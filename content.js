@@ -11,11 +11,15 @@ function createCashDrawerButton() {
             e.preventDefault();
             e.stopPropagation();
             console.log('Clic sur le bouton tiroir');
-            fetch('http://localhost:22548/open-cash-drawer')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Erreur HTTP: ${response.status}`);
-                    }
+            fetch('http://localhost:22548/open-cash-drawer', {
+                mode: 'no-cors',
+                method: 'GET',
+                headers: {
+                    'Accept': '*/*'
+                }
+            })
+                .then(() => {
+                    // En mode no-cors, on ne peut pas accéder à response.ok
                     console.log('Tiroir ouvert avec succès');
                 })
                 .catch(error => {
@@ -105,11 +109,15 @@ document.addEventListener('click', function(e) {
         const cashPaymentButton = e.target.closest('.payment-method-display');
         if (cashPaymentButton && cashPaymentButton.querySelector('img[src*="money.png"]')) {
             console.log('Clic détecté sur le bouton de paiement en espèces');
-            fetch('http://localhost:22548/open-cash-drawer')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`Erreur HTTP: ${response.status}`);
-                    }
+            fetch('http://localhost:22548/open-cash-drawer', {
+                mode: 'no-cors',
+                method: 'GET',
+                headers: {
+                    'Accept': '*/*'
+                }
+            })
+                .then(() => {
+                    // En mode no-cors, on ne peut pas accéder à response.ok
                     console.log('Tiroir ouvert avec succès (paiement en espèces)');
                 })
                 .catch(error => {
