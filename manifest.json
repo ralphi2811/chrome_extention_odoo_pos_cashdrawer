@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Odoo POS Cash Drawer Opener",
+  "version": "1.0",
+  "description": "Ajoute un bouton pour ouvrir le tiroir caisse sur l'interface POS d'Odoo 17",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://sdpmajdb-odoo17-dev-raph-test-01-18437902.dev.odoo.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://sdpmajdb-odoo17-dev-raph-test-01-18437902.dev.odoo.com/*"],
+      "js": ["content.js"]
+    }
+  ]
+}
