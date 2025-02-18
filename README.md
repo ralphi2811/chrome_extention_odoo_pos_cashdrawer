@@ -67,6 +67,24 @@ sequenceDiagram
 - [Webservice Tiroir Caisse](https://github.com/ralphi2811/odoo_pos_cashdrawer_webservice) installé et fonctionnel
 - Instance Odoo avec module Point de Vente (POS)
 
+## 📖 Documentation
+
+### Interface POS Odoo
+
+![Vue générale POS](static/pos01.png)
+*Vue générale de l'interface POS Odoo 17*
+
+![Bouton Ouvrir Tiroir](static/pos02.png)
+*Le bouton "Ouvrir Tiroir" ajouté par l'extension*
+
+![Paiement en espèces](static/pos03.png)
+*Vue des modes de paiement avec le bouton ESPECES qui déclenche l'ouverture automatique du tiroir*
+
+### Webservice
+
+![Réponse du webservice](static/webservice01.png)
+*Retour du webservice lors de l'ouverture du tiroir*
+
 ## 🔍 Débogage
 
 1. Ouvrez la console développeur (F12)
