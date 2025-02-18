@@ -8,7 +8,8 @@
     "scripting"
   ],
   "host_permissions": [
-    "https://sdpmajdb-odoo17-dev-raph-test-01-18437902.dev.odoo.com/*"
+    "https://sdpmajdb-odoo17-dev-raph-test-01-18437902.dev.odoo.com/*",
+    "http://localhost:22548/*"
   ],
   "content_scripts": [
     {
