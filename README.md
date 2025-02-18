@@ -105,9 +105,7 @@ sequenceDiagram
 
 ### Prochaines évolutions prévues
 - [ ] Interface de configuration pour l'URL du webservice
-- [ ] Support de plusieurs tiroirs caisses
 - [ ] Statistiques d'utilisation
-- [ ] Mode hors-ligne
 - [ ] Support des raccourcis clavier
 
 ## 🤝 Contribution
