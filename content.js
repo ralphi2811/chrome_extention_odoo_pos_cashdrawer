@@ -72,28 +72,41 @@ function injectButton() {
     }
 }
 
+// Variable pour compter les tentatives
+let attempts = 0;
+const MAX_ATTEMPTS = 30; // 30 secondes maximum
+
 // Fonction pour vérifier périodiquement et injecter le bouton
 function checkAndInject() {
-    console.log('Vérification pour injection...');
-    if (!injectButton()) {
-        console.log('Nouvelle tentative dans 1 seconde...');
-        setTimeout(checkAndInject, 1000);
+    attempts++;
+    if (attempts === 1) {
+        console.log('Démarrage des tentatives d\'injection...');
     }
+    
+    if (injectButton()) {
+        console.log('Injection réussie, arrêt des vérifications périodiques');
+        return;
+    }
+    
+    if (attempts >= MAX_ATTEMPTS) {
+        console.log('Nombre maximum de tentatives atteint, arrêt des vérifications');
+        return;
+    }
+    
+    setTimeout(checkAndInject, 1000);
 }
 
 // Démarrer la vérification périodique
-console.log('Démarrage de la vérification périodique');
 checkAndInject();
 
 // Observer les changements dans le DOM pour les nouvelles opportunités d'injection
 const observer = new MutationObserver((mutations) => {
-    console.log('Changement détecté dans le DOM');
-    mutations.forEach((mutation) => {
-        if (mutation.addedNodes.length) {
-            console.log('Nouveaux nœuds ajoutés, tentative d\'injection');
+    for (const mutation of mutations) {
+        if (mutation.addedNodes.length && !document.querySelector('.cash-drawer-button')) {
             injectButton();
+            break;
         }
-    });
+    }
 });
 
 // Démarrer l'observation du DOM
